@@ -1,0 +1,1 @@
+(setq he-saved-package-list '(async auto-complete dash dockerfile-mode epl exec-path-from-shell flycheck flycheck-gometalinter gh-md ghub git-commit go-autocomplete go-dlv go-guru go-impl go-mode go-rename ivy let-alist magit magit-popup markdown-mode neotree occur-x pkg-info popup projectile protobuf-mode s seq sr-speedbar swiper web-mode with-editor))

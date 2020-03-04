@@ -1,0 +1,12 @@
+/.#recentf
+/.emacs.desktop
+/.emacs.desktop.lock
+*~
+/ac-comphist.dat
+/elpa/*
+/eshell/history
+/ido.last
+/network-security.data
+/projectile-bookmarks.eld
+/recentf
+/tramp
