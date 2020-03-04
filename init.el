@@ -1,3 +1,10 @@
+;; Packages:
+;;
+;; If this emacs does not seem to have an uptodate list of packages,
+;; run package-install-selectqed-packages see the
+;; ‘package-selected-packages’ variable which is saved by customize
+;; (search for it below).\
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/") t)
 
 (require 'package)
@@ -76,8 +83,7 @@
 
 
 (setq gofmt-command "goimports") ;; goreturns
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/go-mode") t)
-(require 'go-mode-load)
+(require 'go-mode)
 
 (require 'flycheck)
 
@@ -376,9 +382,12 @@
 
 (require 'magit)
 
+
 (define-key global-map (kbd "C-x g") 'magit-status)
 
 (setq magit-last-seen-setup-instructions "1.4.0")
+
+(require 'magithub) ; GitHub integration
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -408,12 +417,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(confirm-kill-emacs (quote y-or-n-p))
  '(flycheck-disabled-checkers (quote (go-vet)))
  '(flycheck-gometalinter-fast t)
  '(magit-diff-refine-hunk t)
  '(package-selected-packages
    (quote
-    (swiper ivy projectile go-dlv neotree sr-speedbar ghub)))
+    (buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
@@ -431,71 +441,5 @@
 (require 'projectile)
 
 (projectile-global-mode +1)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Save the list of installed packages
-
-
-(defvar he-saved-package-list-file (expand-file-name "~/.emacs.d/he-saved-package-list.el")
-  "The file we save he-saved-package-list in.")
-
-(defun he-update-saved-package-list ()
-  (interactive)
-
-  (let ((saved-package-list (he-load-saved-package-list))
-	(package-list (he-get-package-list)))
-
-    ;; Write out a he-saved-package-list-file if the lists are different.
-    (if (not (equal package-list saved-package-list))
-	(progn
-	  (with-temp-file (expand-file-name "~/.emacs.d/he-saved-package-list.el")
-	    (insert "(setq he-saved-package-list '")
-	    (prin1 package-list (current-buffer))
-	    (insert ")"))
-	  (message "Saved package list updated")
-	  ))
-    )
-  )
-
-(defun he-load-saved-package-list ()
-  ;; This variable will be set when the loaded file is evaled.  Thanks dynamic scoping.
-  (let ((he-saved-package-list nil)) 
-    ;; Load the packages, if successful this will setq
-    ;; he-saved-package-list-file to the saved list.  If the file does not
-    ;; exist then there will be no error and no change to
-    ;; he-saved-package-list-file.
-    (load he-saved-package-list-file
-	  t ; no error if file is missing
-	  t ; don't add a suffix
-	  )
-    he-saved-package-list) ; return the value, the variable should now go out of scope.
-  )
-
-
-(defun he-get-package-list ()
-  "Get a list of the packages installed and sort them."
-  (sort (mapcar 'car package-alist)
-	(lambda (a b) (string-lessp (symbol-name a) (symbol-name b)))))
-
-
-(defun he-check-packages ()
-  (interactive)
-
-  (let ((saved-package-list (he-load-saved-package-list))
-	(package-list (he-get-package-list)))
-
-    (if (not (equal package-list saved-package-list))
-	(message "Saved package list differs")
-      (if (called-interactively-p 'interactive)
-	  (message "Saved package list is up to date"))
-      )
-    )
-  )
-
-(he-check-packages)
-
-
-
 
 
