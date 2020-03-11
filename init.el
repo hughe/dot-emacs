@@ -421,9 +421,13 @@
  '(flycheck-disabled-checkers (quote (go-vet)))
  '(flycheck-gometalinter-fast t)
  '(magit-diff-refine-hunk t)
+ '(package-archives
+   (quote
+    (("melpa" . "http://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/"))))
  '(package-selected-packages
    (quote
-    (buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub)))
+    (lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
