@@ -53,28 +53,36 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Insert TODOs
+
+(require 's) ; The s string maniulation library https://github.com/magnars/s.el
+
 (defvar he-insert-todo-who-history nil)
 (defvar he-insert-todo-project-history nil)
 
 (defun he-insert-todo (who project)
   (interactive
    (list
-    (read-from-minibuffer "Who: " nil nil nil 'he-insert-todo-who-history)
-    (read-from-minibuffer "Project: " nil nil nil 'he-insert-todo-project-history)))
+    (read-from-minibuffer "Who: " (car-safe he-insert-todo-who-history) nil nil 'he-insert-todo-who-history)
+    (read-from-minibuffer "Project: " nil  nil nil 'he-insert-todo-project-history)))
 
   (let ((who-empty (string-equal "" who))
 	(proj-empty (string-equal "" project)))
     (insert
-     (cond ((and (not who-empty) (not proj-empty))
-	    (format "// TODO: (%s, %s) " who project))
-	   ((not who-empty)
-	    (format "// TODO: (%s) " who))
-	   ((not proj-empty)
-	    (format "// TODO: (%s) " project))
-	   (t
-	    "// TODO: ")))
-    ))
+     (concat comment-start
+	     (if (s-suffix? " " comment-start) "" " ")
+	     "TODO: "
+	     (cond ((and (not who-empty) (not proj-empty))
+		    (format "(%s, %s) " who project))
+		   ((not who-empty)
+		    (format "(%s) " who))
+		   ((not proj-empty)
+		    (format "(%s) " project))
+		   (t
+		    ""))
+	     ))))
 
+;; Bind it to C-x t
+(global-set-key [(control x) ?t] 'he-insert-todo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; go-mode
@@ -99,7 +107,6 @@
 	    (local-set-key [(control c) (\#)] 'comment-region)
 	    (local-set-key [(control c) ?i] 'go-goto-imports)
 	    (local-set-key [(control c) (control f)] 'gofmt)
-	    (local-set-key [(control c) ?t] 'he-insert-todo)
 	    (local-set-key [(control c) ?`] 'flycheck-next-error)
 	    (local-set-key [(control c) (control t)] 'he-godep-test)
 
