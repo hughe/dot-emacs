@@ -87,7 +87,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; go-mode
 
-(exec-path-from-shell-copy-envs '("PATH" "GOPATH" "GOROOT" "PKG_CONFIG_PATH" "GVM_ROOT"))
+;; Copy go envrionment from shell
+
+(defun he-copy-go-env-from-shell ()
+  (exec-path-from-shell-copy-envs '("PATH" "GOPATH" "GOROOT" "PKG_CONFIG_PATH" "GVM_ROOT")))
+
+(he-copy-go-env-from-shell)
+
+(defun he-gvm-change-env (ver pkgset)
+  "Set the GVM environment for Go version VER and package set
+PKGSET"
+  (interactive "MVersion: \nMPkgset: \n")
+  (message "Version: %s, Pkgset: %s" ver pkgset)
+  (setenv "HUGH_GVM_DEFAULT_GO" ver)
+  (setenv "HUGH_GVM_DEFAULT_PKG" pkgset)
+  (he-copy-go-env-from-shell))
 
 
 (setq gofmt-command "goimports") ;; goreturns
