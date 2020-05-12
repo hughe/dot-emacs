@@ -29,6 +29,9 @@
 ;; Bind C-z to undo.  
 (when window-system
   ;; need to bind this only when we have a window system.
+  ;;
+  ;; TODO: stop doing this someday and use splat-z (which we can remap
+  ;; to C-_ in iTerm2)
   (global-set-key [(control ?z)] 'undo)
   ;; These will only make sense if there is a window system I think, I
   ;; don't think a terminal can produce C-.
@@ -429,9 +432,27 @@ PKGSET"
 ;; Dockerfile mode
 (require 'dockerfile-mode)
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Projectile
+
+(require 'projectile)
+
+(projectile-global-mode +1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
+
+;; Check that the custome variables package-archives and 
+(defun he-refresh-packages ()
+  (interactive)
+  (package-refresh-contents)
+  (package-install-selected-packages))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Automatic
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -458,13 +479,3 @@ PKGSET"
  ;; If there is more than one, they won't work right.
  )
 (put 'narrow-to-region 'disabled nil)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Projectile
-
-(require 'projectile)
-
-(projectile-global-mode +1)
-
-
