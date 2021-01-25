@@ -1,20 +1,57 @@
 ;; Packages:
 ;;
 ;; If this emacs does not seem to have an uptodate list of packages,
-;; run package-install-selectqed-packages see the
-;; ‘package-selected-packages’ variable which is saved by customize
-;; (search for it below).\
+;; run `he-install-my-packages`.
+;;
+;; When we install a new package, add it to the he-package-list.
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/") t)
 
 (require 'package)
 (add-to-list 'package-archives 
-    '("marmalade" .
-      "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives 
     '("melpa" .
       "http://melpa.org/packages/"))
 (package-initialize)
+
+(setq he-package-list
+      '(
+	;; Sort this
+	auto-complete
+	buffer-move
+	dockerfile-mode
+	exec-path-from-shell
+	flycheck
+	flycheck-gometalinter
+	ghub
+	go-autocomplete
+	go-dlv
+	go-guru
+	go-mode
+	ivy
+	lsp-ivy
+	lsp-mode
+	lsp-ui
+	magit
+	magithub
+	neotree
+	occur-x
+	projectile
+	protobuf-mode
+	sr-speedbar
+	swiper
+	web-mode
+	yaml-mode
+	yasnippet
+	zones
+	))
+
+(defun he-install-my-packages ()
+  (interactive)
+  (mapc (lambda (p)
+	  (message "Installing package: %s" p)
+	  (package-install p))
+       he-package-list))
+
 
 ;; Load environment vars from the the shell (extra vars are loaded
 ;; using exec-path-from-shell-copy-env)
@@ -385,7 +422,7 @@ PKGSET"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete mode
-(require 'auto-complete-config)
+(require 'auto-complete)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 
@@ -444,12 +481,6 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
-
-;; Check that the custome variables package-archives and 
-(defun he-refresh-packages ()
-  (interactive)
-  (package-refresh-contents)
-  (package-install-selected-packages))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Automatic
