@@ -31,6 +31,7 @@
 	lsp-ivy
 	lsp-mode
 	lsp-ui
+	lua-mode
 	magit
 	magithub
 	neotree
@@ -381,16 +382,7 @@ PKGSET"
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Makefile mode
-
-(add-hook 'makefile-mode-hook
-  (lambda () 
-    (local-set-key [(control c) (control c)] 'compile)
-    ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; YASnippet
-(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
 (require 'yasnippet)
 (yas-global-mode 1)
 
@@ -450,13 +442,6 @@ PKGSET"
 
 (require 'magithub) ; GitHub integration
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; jsx mode - Doesn't indent or do anything useful.
-;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-;;(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
-
-
 ;; Attempt to improve the performance of compilations 
 (setq process-adaptive-read-buffering nil)
 
@@ -477,7 +462,160 @@ PKGSET"
 
 (require 'projectile)
 
-(projectile-global-mode +1)
+(projectile-mode) ;; enable projectile mode
+
+(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Lua mode
+(require 'lua-mode)
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
+(setq lua-default-application (expand-file-name "~/src/lua/lua-docker"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; cc-modes
+
+(c-add-style "sqlite"
+	     '((c-basic-offset . 2)	; Guessed value
+	       (c-offsets-alist
+		(arglist-cont . 0)	; Guessed value
+		(arglist-intro . +)	; Guessed value
+		(block-close . 0)	; Guessed value
+		(brace-entry-open . 0)	; Guessed value
+		(brace-list-close . 0)	; Guessed value
+		(brace-list-entry . 0)	; Guessed value
+		(brace-list-intro . +)	; Guessed value
+		(case-label . 0)	; Guessed value
+		(class-close . 0)	; Guessed value
+		(cpp-macro-cont . 8)	; Guessed value
+		(defun-block-intro . +)	; Guessed value
+		(defun-close . 0)	; Guessed value
+		(inclass . +)		; Guessed value
+		(statement . 0)		    ; Guessed value
+		(statement-block-intro . +) ; Guessed value
+		(statement-case-intro . +) ; Guessed value
+		(statement-cont . -)	; Guessed value
+		(substatement . -)	; Guessed value
+		(topmost-intro . 0)	; Guessed value
+		(access-label . -)
+		(annotation-top-cont . 0)
+		(annotation-var-cont . +)
+		(arglist-close . c-lineup-close-paren)
+		(arglist-cont-nonempty . c-lineup-arglist)
+		(block-open . 0)
+		(brace-list-open . 0)
+		(c . c-lineup-C-comments)
+		(catch-clause . 0)
+		(class-open . 0)
+		(comment-intro . c-lineup-comment)
+		(composition-close . 0)
+		(composition-open . 0)
+		(cpp-define-intro c-lineup-cpp-define +)
+		(cpp-macro . -1000)
+		(defun-open . 0)
+		(do-while-closure . 0)
+		(else-clause . 0)
+		(extern-lang-close . 0)
+		(extern-lang-open . 0)
+		(friend . 0)
+		(func-decl-cont . +)
+		(incomposition . +)
+		(inexpr-class . +)
+		(inexpr-statement . +)
+		(inextern-lang . +)
+		(inher-cont . c-lineup-multi-inher)
+		(inher-intro . +)
+		(inlambda . 0)
+		(inline-close . 0)
+		(inline-open . +)
+		(inmodule . +)
+		(innamespace . +)
+		(knr-argdecl . 0)
+		(knr-argdecl-intro . +)
+		(label . 2)
+		(lambda-intro-cont . +)
+		(member-init-cont . c-lineup-multi-inher)
+		(member-init-intro . +)
+		(module-close . 0)
+		(module-open . 0)
+		(namespace-close . 0)
+		(namespace-open . 0)
+		(objc-method-args-cont . c-lineup-ObjC-method-args)
+		(objc-method-call-cont c-lineup-ObjC-method-call-colons c-lineup-ObjC-method-call +)
+		(objc-method-intro .
+				   [0])
+		(statement-case-open . 0)
+		(stream-op . c-lineup-streamop)
+		(string . -1000)
+		(substatement-label . 2)
+		(substatement-open . +)
+		(template-args-cont c-lineup-template-args +)
+		(topmost-intro-cont . c-lineup-topmost-intro-cont))))
+
+(c-add-style "sldb-c++"
+	     '("stroustrup"
+	       (c-basic-offset . 2)
+	       (c-offsets-alist
+		(innamespace . [0]))
+	       ))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Colorize compilation buffer.
+;;
+;; From: https://emacs.stackexchange.com/a/38531
+
+;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
+(require 'ansi-color)
+(defun endless/colorize-compilation ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region
+     compilation-filter-start (point))))
+
+(add-hook 'compilation-filter-hook
+          #'endless/colorize-compilation)
+
+;; Stolen from (https://oleksandrmanzyuk.wordpress.com/2011/11/05/better-emacs-shell-part-i/)
+(defun regexp-alternatives (regexps)
+  "Return the alternation of a list of regexps."
+  (mapconcat (lambda (regexp)
+               (concat "\\(?:" regexp "\\)"))
+             regexps "\\|"))
+
+(defvar non-sgr-control-sequence-regexp nil
+  "Regexp that matches non-SGR control sequences.")
+
+(setq non-sgr-control-sequence-regexp
+      (regexp-alternatives
+       '(;; icon name escape sequences
+         "\033\\][0-2];.*?\007"
+         ;; non-SGR CSI escape sequences
+         "\033\\[\\??[0-9;]*[^0-9;m]"
+         ;; noop
+         "\012\033\\[2K\033\\[1F"
+         )))
+
+(defun filter-non-sgr-control-sequences-in-region (begin end)
+  (save-excursion
+    (goto-char begin)
+    (while (re-search-forward
+            non-sgr-control-sequence-regexp end t)
+      (replace-match ""))))
+
+(defun filter-non-sgr-control-sequences-in-output () ;; (ignored)
+  (let ((start-marker
+         (or comint-last-output-start
+             (point-min-marker)))
+        (end-marker
+         (process-mark
+          (get-buffer-process (current-buffer)))))
+    (filter-non-sgr-control-sequences-in-region
+     start-marker
+     end-marker)))
+
+(add-hook 'compilation-filter-hook ;;'comint-output-filter-functions
+          'filter-non-sgr-control-sequences-in-output)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
@@ -491,17 +629,17 @@ PKGSET"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(confirm-kill-emacs (quote y-or-n-p))
- '(flycheck-disabled-checkers (quote (go-vet)))
+ '(compilation-scroll-output 'first-error)
+ '(confirm-kill-emacs 'y-or-n-p)
+ '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
  '(magit-diff-refine-hunk t)
+ '(markdown-command "markdown_py")
  '(package-archives
-   (quote
-    (("melpa" . "http://melpa.org/packages/")
-     ("gnu" . "https://elpa.gnu.org/packages/"))))
+   '(("melpa" . "http://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   (quote
-    (zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub)))
+   '(rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
@@ -511,3 +649,5 @@ PKGSET"
  ;; If there is more than one, they won't work right.
  )
 (put 'narrow-to-region 'disabled nil)
+
+
