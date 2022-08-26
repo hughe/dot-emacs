@@ -600,6 +600,19 @@ PKGSET"
 
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
 
+(add-hook 'antlr-mode-hook
+	  (lambda ()
+	    (local-set-key [(control c) (control c)] 'compile)
+	    ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Makefile mode
+
+(add-hook 'makefile-mode-hook
+	  (lambda ()
+	    (local-set-key [(control c) (control c)] 'compile)
+	    ))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
