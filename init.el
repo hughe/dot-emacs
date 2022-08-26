@@ -153,6 +153,9 @@ PKGSET"
 	  (lambda ()
 	    (flycheck-mode t)))
 
+(eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
+
 (require 'compile)
 
 (add-hook 'go-mode-hook
@@ -593,6 +596,11 @@ PKGSET"
           'filter-non-sgr-control-sequences-in-output)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ANTLR mode (is built in according to package-list-packages)
+
+(add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
 
@@ -614,7 +622,7 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
