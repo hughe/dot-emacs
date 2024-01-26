@@ -91,6 +91,16 @@
 ; when idle.
 (setq desktop-restore-eager 10)
 
+;; Load midnight to that we can use clean-buffer-list.
+(require 'midnight)
+
+(add-hook 'desktop-save-mode
+	  (lambda ()
+	    ;; Clean the buffer list
+	    ;; https://www.emacswiki.org/emacs/CleanBufferList before
+	    ;; saving it.
+	    (clean-buffer-list))) 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Insert TODOs
 
