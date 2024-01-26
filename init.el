@@ -624,6 +624,21 @@ PKGSET"
 	    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python mode
+
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (local-set-key [(control c) (control c)] 'compile)
+	    ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Web Mode
+(require 'web-mode)
+;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)) ;; Use web mode for html.
+(setq web-mode-enable-engine-detection t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
 
