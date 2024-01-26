@@ -24,7 +24,6 @@
 	ghub
 	go-autocomplete
 	go-dlv
-	go-guru
 	go-mode
 	ivy
 	lsp-ivy
@@ -227,17 +226,6 @@ PKGSET"
 	  (lambda ()
 	    (local-set-key [(control c) (control j)] 'he-godef-jump)
 	    ))
-		      
-;; go-guru
-
-(require 'go-guru)
-
-; gvmrun guru so that it picks up the gvm config.
-;(setq go-guru-command "gvmrun guru")
-
-(add-hook 'go-mode-hook
-	  (lambda ()
-	    (go-guru-hl-identifier-mode)))
 
 (defun he-go-grep (expression)
   "Grep the .go files in the current directory for regular EXPRESSION"
