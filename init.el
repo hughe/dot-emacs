@@ -656,7 +656,8 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(log4e websocket docker-tramp flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+ '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
