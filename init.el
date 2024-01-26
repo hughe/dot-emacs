@@ -627,6 +627,14 @@ PKGSET"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Serenade Mode
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/serenade-mode") t)
+
+(use-package serenade-mode)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
 
