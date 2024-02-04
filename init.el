@@ -1,9 +1,21 @@
+;; TODO:
+;;
+;; * remove docker-tramp, it's built in now.
+;;
+;; * finish setting up helm
+;;
+;; * try removing exec path from shell
+
+
+
 ;; Packages:
 ;;
 ;; If this emacs does not seem to have an uptodate list of packages,
 ;; run `he-install-my-packages`.
 ;;
 ;; When we install a new package, add it to the he-package-list.
+
+
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/") t)
 
@@ -396,15 +408,36 @@ PKGSET"
 
 (require 'go-autocomplete)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ivy mode
+;; Disable ivy so we can try helm.
 
-(require 'ivy)
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Ivy mode
+
+;; (require 'ivy)
+;; (ivy-mode 1)
+;; (setq ivy-use-virtual-buffers t)
+;; (setq enable-recursive-minibuffers t)
 
 ;; swiper doesn't seem to work with this ivy for some reason.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Helm
+
+(use-package helm)
+
+(helm-mode 1)
+
+;; Pinched from ./helm-cfg.el which we don't load.
+(with-eval-after-load 'tramp-cache (setq tramp-cache-read-persistent-data t))
+(with-eval-after-load 'auth-source (setq auth-source-save-behavior nil))
+(define-key global-map [remap find-file] 'helm-find-files)
+(define-key global-map [remap occur] 'helm-occur)
+(define-key global-map [remap list-buffers] 'helm-buffers-list)
+(define-key global-map [remap dabbrev-expand] 'helm-dabbrev)
+(define-key global-map [remap execute-extended-command] 'helm-M-x)
+(define-key global-map [remap apropos-command] 'helm-apropos)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
@@ -628,11 +661,18 @@ PKGSET"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Serenade Mode
+;;
+;; Lets not use it.  Its unreliable, unmaintained and bad.
+;; It also disables command-C, command-V, etc.
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/serenade-mode") t)
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/serenade-mode") t)
 
-(use-package serenade-mode)
+;; (setq serenade-completion-frontend 'helm)
+;; (setq serenade-helm-M-x t)
+;; (setq serenade-snippet-engine 'yasnippet)
 
+;; ;; enable line numbers for serenade.
+;; (global-display-line-numbers-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
@@ -648,6 +688,7 @@ PKGSET"
  ;; If there is more than one, they won't work right.
  '(compilation-scroll-output 'first-error)
  '(confirm-kill-emacs 'y-or-n-p)
+ '(cua-mode nil)
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
  '(magit-diff-refine-hunk t)
@@ -656,7 +697,7 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(log4e websocket docker-tramp flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(helm log4e websocket docker-tramp flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
