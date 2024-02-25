@@ -674,6 +674,97 @@ PKGSET"
 ;; ;; enable line numbers for serenade.
 ;; (global-display-line-numbers-mode 1)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+
+(require 'sql)
+
+(defvar he-sql-sldb-program (expand-file-name "~/src/sldb/scripts/run_sldb_shell_minio.sh"))
+
+
+;; Add SLDB as a product (taken from the top of sql.el.gz).
+
+;; 1) Add the product to the list of known products.
+
+(sql-add-product 'sldb "SLDB"
+     	         '(:free-software t))
+
+;; 2) Define font lock settings.  Same as SQLite.
+
+(sql-set-product-feature 'sldb
+                         :font-lock
+                         'sql-mode-sqlite-font-lock-keywords)
+
+;; 3) Define any special syntax characters including comments and
+;;    identifier characters.
+
+;; None
+
+;; 4) Define the interactive command interpreter for the database
+;;    product.
+
+(defcustom he-sql-sldb-program (expand-file-name "~/src/sldb/build/sldb_shell")
+  "Command to start sldb_shell."
+  :type 'file
+  :group 'SQL)
+
+(sql-set-product-feature 'sldb
+                         :sqli-program 'he-sql-sldb-program)
+(sql-set-product-feature 'sldb
+                         :prompt-regexp "^sqlite> ")
+(sql-set-product-feature 'sldb
+                         :prompt-length 8)
+
+;; 5) Define login parameters and command line formatting.
+
+;;     (defcustom my-sql-xyz-login-params '(user password server database)
+;;       "Login parameters to needed to connect to XyzDB."
+;;       :type 'sql-login-params
+;;       :group 'SQL)
+;;
+;;     (sql-set-product-feature 'sldb
+;;                              :sqli-login 'my-sql-xyz-login-params)
+
+;;     (defcustom my-sql-xyz-options '("-X" "-Y" "-Z")
+;;       "List of additional options for `sql-xyz-program'."
+;;       :type '(repeat string)
+;;       :group 'SQL)
+;;
+;;     (sql-set-product-feature 'sldb
+;;                              :sqli-options 'my-sql-xyz-options))
+
+;;     (defun my-sql-comint-xyz (product options &optional buf-name)
+;;       "Connect ti XyzDB in a comint buffer."
+;;
+;;         ;; Do something with `sql-user', `sql-password',
+;;         ;; `sql-database', and `sql-server'.
+;;         (let ((params
+;;                (append
+;;           (if (not (string= "" sql-user))
+;;                     (list "-U" sql-user))
+;;                 (if (not (string= "" sql-password))
+;;                     (list "-P" sql-password))
+;;                 (if (not (string= "" sql-database))
+;;                     (list "-D" sql-database))
+;;                 (if (not (string= "" sql-server))
+;;                     (list "-S" sql-server))
+;;                 options)))
+;;           (sql-comint product params buf-name)))
+;;
+(sql-set-product-feature 'sldb
+                         :sqli-comint-func 'sql-comint-sqlite)
+
+;; 6) Define a convenience function to invoke the SQL interpreter.
+
+(defun he-sql-sldb (&optional buffer)
+  "Run sldb_shell as an inferior process."
+  (interactive "P")
+  (sql-product-interactive 'sldb buffer))
+
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 (server-start)
