@@ -397,11 +397,16 @@ PKGSET"
 	    ))
 
 (setq web-mode-content-types-alist
-  '(("jsx" . "\\.js[x]?\\'")))
+      '(("jsx" . "\\.js[x]?\\'")))
+
+;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)) ;; Use web mode for html.
+(setq web-mode-enable-engine-detection t)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-complete mode
+;; M-tab
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
@@ -651,12 +656,6 @@ PKGSET"
 	  (lambda ()
 	    (local-set-key [(control c) (control c)] 'compile)
 	    ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Web Mode
-(require 'web-mode)
-;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)) ;; Use web mode for html.
-(setq web-mode-enable-engine-detection t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
