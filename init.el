@@ -1,9 +1,5 @@
 ;; TODO:
 ;;
-;; * remove docker-tramp, it's built in now.
-;;
-;; * finish setting up helm
-;;
 ;; * try removing exec path from shell
 
 
@@ -37,8 +33,7 @@
 	go-autocomplete
 	go-dlv
 	go-mode
-	ivy
-	lsp-ivy
+	helm
 	lsp-mode
 	lsp-ui
 	lua-mode
@@ -54,6 +49,8 @@
 	yaml-mode
 	yasnippet
 	zones
+;	ivy
+;	lsp-ivy
 	))
 
 (defun he-install-my-packages ()
@@ -787,7 +784,7 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(helm log4e websocket docker-tramp flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
