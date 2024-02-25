@@ -440,7 +440,6 @@ PKGSET"
 (define-key global-map [remap execute-extended-command] 'helm-M-x)
 (define-key global-map [remap apropos-command] 'helm-apropos)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 
@@ -776,6 +775,7 @@ PKGSET"
  '(compilation-scroll-output 'first-error)
  '(confirm-kill-emacs 'y-or-n-p)
  '(cua-mode nil)
+ '(custom-enabled-themes '(tango-dark))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
  '(magit-diff-refine-hunk t)
