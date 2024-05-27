@@ -817,10 +817,22 @@ PKGSET"
 (require 'cmake-mode)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Run gdb in docker.
+;;
+;; Important: the --annotate=1 flag must be on the command line.
+;;
 
+(defun sldb-gdb (progname)
+  (interactive "fFile to debug: ")
+  ;; Don't use -it it makes things worse.
+  (let ((cmd (format "docker exec -i sldb-shell gdb --annotate=1 %s" progname)))
+    (message "Running: %s" cmd)
+    (gud-gdb cmd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
+
 (server-start)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -837,13 +849,14 @@ PKGSET"
  '(custom-enabled-themes '(tango-dark))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
+ '(large-file-warning-threshold 500000000)
  '(magit-diff-refine-hunk t)
  '(markdown-command "markdown_py")
  '(package-archives
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
