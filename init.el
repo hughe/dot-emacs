@@ -542,7 +542,7 @@ PKGSET"
 		(incomposition . +)
 		(inexpr-class . +)
 		(inexpr-statement . +)
-		(inextern-lang . +)
+		(inextern-lang . 0)
 		(inher-cont . c-lineup-multi-inher)
 		(inher-intro . +)
 		(inlambda . 0)
