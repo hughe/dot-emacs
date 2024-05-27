@@ -81,7 +81,17 @@
   ;; These will only make sense if there is a window system I think, I
   ;; don't think a terminal can produce C-.
   (global-set-key [(control ?.)] 'fixup-whitespace)
-  (global-set-key [(control ?,)] 'join-line))
+  (global-set-key [(control ?,)] 'join-line)
+
+  (global-unset-key (kbd "C-<triple-wheel-down>"))
+  (global-unset-key (kbd "C-<double-wheel-down>"))
+  (global-unset-key (kbd "C-<wheel-down>"))
+
+  (global-unset-key (kbd "C-<triple-wheel-up>"))
+  (global-unset-key (kbd "C-<double-wheel-up>"))
+  (global-unset-key (kbd "C-<wheel-up>"))
+
+  )
 
 ;; In Aquamacs, Home and End are bound in the special osx-key-mode-map
 ;; map to {beginning,end}-of-buffer, which is apparently mor Mac-like.
