@@ -26,16 +26,17 @@
 	;; Sort this
 	auto-complete
 	buffer-move
+	cmake-mode
 	dockerfile-mode
 	exec-path-from-shell
 	flycheck
-	ghub
+;	ghub
 	go-autocomplete
 	go-dlv
 	go-mode
 	helm
-	lsp-mode
-	lsp-ui
+;	lsp-mode
+;	lsp-ui
 	lua-mode
 	magit
 	magithub
