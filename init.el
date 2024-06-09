@@ -830,6 +830,31 @@ PKGSET"
     (message "Running: %s" cmd)
     (gud-gdb cmd)))
 
+
+(defun sldb-gdb-ex (command)
+  (interactive "MCommand line (don't forget 'gdb --annotate=1'): ")
+  ;; Don't use -it it makes things worse.
+  (let ((cmd (format "docker exec -i sldb-shell %s" command)))
+    (message "Running: %s" cmd)
+    (gud-gdb cmd)))
+
+(defun sldb-gdb-with-minio (progname)
+  (interactive "fFile to debug: ")
+  ;; Don't use -it it makes things worse.
+  (let ((cmd (format "docker exec -i sldb-shell ./scripts/test_with_minio.sh gdb --annotate=1 %s" progname)))
+    (message "Running: %s" cmd)
+    (gud-gdb cmd)))
+
+(defun sldb-gdb-test (progname)
+  (interactive "fFile to debug: ")
+  ;; Don't use -it it makes things worse.
+  ;; TODO: change directory to SLDB root dir and run.  Think I might need a new buffer.
+  ;; (projectile-project-root) returns the project root.
+  (let ((cmd (format "./sldb_run -s -x ./scripts/test_with_minio.sh gdb --annotate=1 %s" progname)))
+    (message "Running: %s" cmd)
+    (gud-gdb cmd)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
 
