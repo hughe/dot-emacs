@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: assert is nil
+# key: asin
+# binding: direct-keybinding
+# --
+
+if ${1:got} != nil {
+   t.Errorf("$2 $1 is not nil, expected nil")
+}
+$0

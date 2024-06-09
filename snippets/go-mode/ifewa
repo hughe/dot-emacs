@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: if err wrap the err
+# --
+if ${1:err} != nil {
+    $1 = errors.Wrap($1, "Error $2")
+}
+$3

@@ -1,0 +1,4 @@
+if ${1:got} != ${2:want} {
+   t.Errorf("$3 got %#v want %#v", $1, $2)
+}
+$0

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: hdr
+# --
+
+#ifndef ${1:name}
+#define $1
+/* BEGIN: $1 */
+$0
+/* END: $1 */
+#endif
+

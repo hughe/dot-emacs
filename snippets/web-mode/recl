@@ -1,0 +1,10 @@
+var ${1:name} = React.createClass({
+    getInitialState: function() {
+	return {};
+    },
+    render: function() {
+        return (
+	    $0
+	);
+    }
+});

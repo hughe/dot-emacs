@@ -1,0 +1,4 @@
+func(txn mdbi.Txn) error {
+    $0
+    return nil
+}

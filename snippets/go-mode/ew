@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ew
+# --
+errors.Wrap(${1:err},"Error $2")
+$3

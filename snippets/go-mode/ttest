@@ -1,0 +1,16 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ttest
+# key: ttest
+# binding: direct-keybinding
+# --
+tab := []struct{
+    $1
+}{
+    {
+    $2
+    },
+}
+
+for i, x := range tab {
+    $0
+}

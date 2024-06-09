@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pv
+# --
+fprintf(stderr, "%s %s:%d $1 = %${2:fmt}\n", __func__, __FILE__, __LINE__, ${1:var});
+$0

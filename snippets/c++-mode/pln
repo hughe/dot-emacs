@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pln
+# --
+fprintf(stderr, "%s %s:%d ${1:msg}\n", __func__, __FILE__, __LINE__);
+$0

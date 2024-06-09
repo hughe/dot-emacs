@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: ewf
+# --
+errors.Wrapf(${1:err},"Error $2", $3)

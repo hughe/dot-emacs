@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: iffe
+# --
+
+if $1${2:err} = $3; $2 != nil {
+	$0
+	return $2
+}

@@ -1,0 +1,4 @@
+if !reflect.DeepEqual(${1:got}, ${2:want}) {
+   t.Errorf("%d $3 got %#v want %#v", ${4:i}, $1, $2)
+}
+$0

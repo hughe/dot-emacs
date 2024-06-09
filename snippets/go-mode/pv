@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pv
+# --
+fmt.Printf("$1 = %#v\n", ${1:var})
+$0
