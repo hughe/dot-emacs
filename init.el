@@ -937,6 +937,20 @@ PKGSET"
      (display-buffer-reuse-window display-buffer-same-window)
      ))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gptel
+
+
+
+(setq gptel-model 'claude-3-7-sonnet-20250219 ; was: claude-3-5-sonnet-20241022
+      gptel-backend (gptel-make-anthropic "Claude"
+		      :stream t
+		      :key ))
+
+(global-set-key [(control x) ?7 ?b] 'gptel)
+(global-set-key [(control x) ?7 ?s] 'gptel-send)
+(global-set-key [(control x) ?7 ?r] 'gptel-rewrite)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
