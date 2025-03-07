@@ -987,6 +987,7 @@ PKGSET"
  '(custom-enabled-themes '(tango-dark))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
+ '(global-tab-line-mode t)
  '(large-file-warning-threshold 500000000)
  '(magit-diff-refine-hunk t)
  '(markdown-command "markdown_py")
@@ -994,7 +995,9 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(elysium gptel cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+ '(projectile-tags-backend 'etags-select)
+ '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
