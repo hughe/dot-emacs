@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Debug Variable
+# key: dv
+# --
+log::debug!("$0$1 = {:?}", $1);

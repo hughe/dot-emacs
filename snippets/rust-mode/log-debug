@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Log Debug
+# key:  ld
+# --
+log::debug!("$0");
+
