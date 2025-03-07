@@ -975,7 +975,15 @@ PKGSET"
   (prog-mode . smerge-mode))
 
 (global-set-key [(control x) ?7 ?e] 'elysium-query)
-
+(global-set-key [(control x) ?7 ?k] 'elysium-keep-all-suggested-changes)
+(global-set-key [(control x) ?7 ?d] 'elysium-discard-all-suggested-changes)
+(global-set-key [(control x) ?7 ?c] 'elysium-clear-buffer)
+(global-set-key [(control x) ?7 ?a] 'elysium-add-context)
+(global-set-key [(control x) ?7 ?t] 'elysium-toggle-window)
+(global-set-key [(control x) ?7 ?n] 'smerge-next)
+(global-set-key [(control x) ?7 ?p] 'smerge-previous)
+(global-set-key [(control x) ?7 ?o] 'smerge-keep-other)
+(global-set-key [(control x) ?7 ?m] 'smerge-keep-mine)
 
 
 
