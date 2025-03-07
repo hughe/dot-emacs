@@ -50,7 +50,7 @@
 	yaml-mode
 	yasnippet
 	zones
-;	ivy
+	ivy
 ;	lsp-ivy
 	))
 
@@ -426,10 +426,10 @@ PKGSET"
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Ivy mode
 
-;; (require 'ivy)
-;; (ivy-mode 1)
-;; (setq ivy-use-virtual-buffers t)
-;; (setq enable-recursive-minibuffers t)
+(require 'ivy)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
 
 ;; swiper doesn't seem to work with this ivy for some reason.
 
@@ -437,19 +437,19 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helm
 
-(use-package helm)
+;; (use-package helm)
 
-(helm-mode 1)
+;; (helm-mode 1)
 
-;; Pinched from ./helm-cfg.el which we don't load.
-(with-eval-after-load 'tramp-cache (setq tramp-cache-read-persistent-data t))
-(with-eval-after-load 'auth-source (setq auth-source-save-behavior nil))
-(define-key global-map [remap find-file] 'helm-find-files)
-(define-key global-map [remap occur] 'helm-occur)
-(define-key global-map [remap list-buffers] 'helm-buffers-list)
-(define-key global-map [remap dabbrev-expand] 'helm-dabbrev)
-(define-key global-map [remap execute-extended-command] 'helm-M-x)
-(define-key global-map [remap apropos-command] 'helm-apropos)
+;; ;; Pinched from ./helm-cfg.el which we don't load.
+;; (with-eval-after-load 'tramp-cache (setq tramp-cache-read-persistent-data t))
+;; (with-eval-after-load 'auth-source (setq auth-source-save-behavior nil))
+;; (define-key global-map [remap find-file] 'helm-find-files)
+;; (define-key global-map [remap occur] 'helm-occur)
+;; (define-key global-map [remap list-buffers] 'helm-buffers-list)
+;; (define-key global-map [remap dabbrev-expand] 'helm-dabbrev)
+;; (define-key global-map [remap execute-extended-command] 'helm-M-x)
+;; (define-key global-map [remap apropos-command] 'helm-apropos)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
