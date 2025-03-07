@@ -686,7 +686,7 @@ PKGSET"
 
 (require 'sql)
 
-(defvar he-sql-sldb-program (expand-file-name "~/src/sldb/scripts/run_sldb_shell_minio.sh"))
+(defvar he-sql-sldb-program (expand-file-name "~/src/sldb/scripts/run_sldb_rs_shell_minio.sh"))
 
 
 ;; Add SLDB as a product (taken from the top of sql.el.gz).
@@ -851,7 +851,15 @@ PKGSET"
   ;; Don't use -it it makes things worse.
   ;; TODO: change directory to SLDB root dir and run.  Think I might need a new buffer.
   ;; (projectile-project-root) returns the project root.
-  (let ((cmd (format "./sldb_run -s -x ./scripts/test_with_minio.sh gdb --annotate=1 %s" progname)))
+  (let ((cmd (format "./sldb_run -x ./scripts/test_with_minio.sh gdb --annotate=1 %s" progname))
+	(gud-gdb-mode-hook (cons (lambda ()
+				   (display "cd sldb")
+				   (cd (expand-file-name "~/src/sldb")))
+				 (if (boundp 'gud-gdb-mode-hook)
+				     gud-gdb-mode-hook
+				   '())
+				 ))
+	)
     (message "Running: %s" cmd)
     (gud-gdb cmd)))
 
