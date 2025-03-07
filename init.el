@@ -863,6 +863,31 @@ PKGSET"
     (message "Running: %s" cmd)
     (gud-gdb cmd)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rust mode
+
+(add-hook 'rust-mode-hook
+	  (lambda ()
+	    (local-set-key [(control c) (\#)] 'comment-region)
+	    (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)
+	    ))
+
+;; Add rust back traces to compilation-error-regexp-alist.
+(add-to-list 'compilation-error-regexp-alist 'rust-backtrace)
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(rust-backtrace
+               "^ *at +\\(.+?\\):\\([0-9]+\\)" 
+               1 2 nil nil))
+
+
+;; Add these directories to the compilation-search-path.
+;;
+;; This should probably be set in compilation-mode-hook iff the
+;; default-directory of the "*compilation*" buffer is an SLDB
+;; directory. We should probably apply 'make-variable-buffer-local' to
+;; the variable.
+(setq compilation-search-path '("/Users/hugh/src/sldb/"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
