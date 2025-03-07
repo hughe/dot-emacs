@@ -940,12 +940,21 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gptel
 
-
-
-(setq gptel-model 'claude-3-7-sonnet-20250219 ; was: claude-3-5-sonnet-20241022
-      gptel-backend (gptel-make-anthropic "Claude"
-		      :stream t
-		      :key ))
+(use-package gptel
+  :custom
+  (gptel-model 'claude-3-5-sonnet-20240620)
+  :config
+  (defun read-file-contents (file-path)
+    "Read the contents of FILE-PATH and return it as a string."
+    (with-temp-buffer
+      (insert-file-contents file-path)
+      (buffer-string)))
+  (defun gptel-api-key ()
+    (read-file-contents "~/.emacs.d/claude_key"))
+  (setq
+   gptel-backend (gptel-make-anthropic "Claude"
+                   :stream t
+                   :key #'gptel-api-key)))
 
 (global-set-key [(control x) ?7 ?b] 'gptel)
 (global-set-key [(control x) ?7 ?s] 'gptel-send)
@@ -966,6 +975,8 @@ PKGSET"
   (prog-mode . smerge-mode))
 
 (global-set-key [(control x) ?7 ?e] 'elysium-query)
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
