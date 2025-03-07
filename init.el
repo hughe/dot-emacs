@@ -888,6 +888,55 @@ PKGSET"
 ;; the variable.
 (setq compilation-search-path '("/Users/hugh/src/sldb/"))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Window management. See
+;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+
+(setq switch-to-buffer-in-dedicated-window 'pop)
+
+(setq switch-to-buffer-obey-display-actions t)
+
+(defun mp-split-below (arg)
+  "Split window below from the parent or from root with ARG."
+  (interactive "P")
+  (split-window (if arg (frame-root-window)
+                  (window-parent (selected-window)))
+                nil 'below nil))
+
+(defun mp-split-right (arg)
+  "Split window right from the parent or from root with ARG."
+  (interactive "P")
+  (split-window (if arg (frame-root-window)
+                  (window-parent (selected-window)))
+                nil 'right nil))
+
+(defun mp-toggle-window-dedication ()
+  "Toggles window dedication in the selected window."
+  (interactive)
+  (set-window-dedicated-p (selected-window)
+			  (not (window-dedicated-p (selected-window)))))
+
+(add-to-list 'display-buffer-alist
+   '("\\*Help\\*"
+     (display-buffer-reuse-window display-buffer-pop-up-window)
+     ))
+
+;; Display the *compilation* buffer in a dedicated window at the
+;; bottom of the frame.
+(add-to-list 'display-buffer-alist
+   '("\\*compilation\\*"
+     (display-buffer-reuse-window display-buffer-at-bottom)
+     (dedicated . t)
+     (window-height . 15)
+     (window-min-height . 0.25)
+     ))
+
+;; Display the main Magit buffer in the same window as it was invoked from.
+(add-to-list 'display-buffer-alist
+   '("^magit:.*"
+     (display-buffer-reuse-window display-buffer-same-window)
+     ))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
