@@ -920,21 +920,35 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gptel
 
-(use-package gptel
-  :custom
-  (gptel-model 'claude-3-5-sonnet-20240620)
-  :config
-  (defun read-file-contents (file-path)
-    "Read the contents of FILE-PATH and return it as a string."
-    (with-temp-buffer
-      (insert-file-contents file-path)
-      (buffer-string)))
-  (defun gptel-api-key ()
-    (read-file-contents "~/.emacs.d/claude_key"))
-  (setq
-   gptel-backend (gptel-make-anthropic "Claude"
-                   :stream t
-                   :key #'gptel-api-key)))
+(defun he-read-file-contents (file-path)
+  "Read the contents of FILE-PATH and return it as a string."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (buffer-string)))
+
+(defun gptel-api-key ()
+  (he-read-file-contents "~/.emacs.d/claude_key"))
+
+(setq he-claude-standard (gptel-make-anthropic "Claude"
+			   :stream t
+			   :key #'gptel-api-key))
+
+(setq he-claude-reasoning (gptel-make-anthropic "Claude-Reasoning"
+			    :key #'gptel-api-key
+			    :stream t
+			    :models '(claude-3-7-sonnet-20250219)
+			    :header (lambda () (when-let* ((key (gptel--get-api-key)))
+						 `(("x-api-key" . ,key)
+						   ("anthropic-version" . "2023-06-01")
+						   ("anthropic-beta" . "pdfs-2024-09-25")
+						   ("anthropic-beta" . "output-128k-2025-02-19")
+						   ("anthropic-beta" . "prompt-caching-2024-07-31"))))
+			    :request-params '(:thinking (:type "enabled" :budget_tokens 2048)
+							:max_tokens 4096)))
+
+(use-package gptel)
+(setq gptel-model 'claude-3-7-sonnet-20250219)  ;; Was: claude-3-5-sonnet-20240620
+(setq gptel-backend he-claude-standard)
 
 (global-set-key [(control x) ?7 ?b] 'gptel)
 (global-set-key [(control x) ?7 ?s] 'gptel-send)
@@ -960,11 +974,6 @@ PKGSET"
 (global-set-key [(control x) ?7 ?c] 'elysium-clear-buffer)
 (global-set-key [(control x) ?7 ?a] 'elysium-add-context)
 (global-set-key [(control x) ?7 ?t] 'elysium-toggle-window)
-(global-set-key [(control x) ?7 ?n] 'smerge-next)
-(global-set-key [(control x) ?7 ?p] 'smerge-previous)
-(global-set-key [(control x) ?7 ?o] 'smerge-keep-other)
-(global-set-key [(control x) ?7 ?m] 'smerge-keep-mine)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
