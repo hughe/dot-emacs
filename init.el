@@ -34,7 +34,6 @@
 	go-autocomplete
 	go-dlv
 	go-mode
-	helm
 ;	lsp-mode
 ;	lsp-ui
 	lua-mode
@@ -420,8 +419,6 @@ PKGSET"
 (ac-config-default)
 
 (require 'go-autocomplete)
-
-;; Disable ivy so we can try helm.
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Ivy mode
