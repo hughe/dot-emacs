@@ -661,23 +661,6 @@ PKGSET"
 	    (local-set-key [(control c) (control c)] 'compile)
 	    ))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Serenade Mode
-;;
-;; Lets not use it.  Its unreliable, unmaintained and bad.
-;; It also disables command-C, command-V, etc.
-
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/serenade-mode") t)
-
-;; (setq serenade-completion-frontend 'helm)
-;; (setq serenade-helm-M-x t)
-;; (setq serenade-snippet-engine 'yasnippet)
-
-;; ;; enable line numbers for serenade.
-;; (global-display-line-numbers-mode 1)
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
