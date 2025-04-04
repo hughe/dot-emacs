@@ -38,7 +38,6 @@
 ;	lsp-ui
 	lua-mode
 	magit
-	magithub
 	neotree
 	occur-x
 	projectile
@@ -457,8 +456,6 @@ PKGSET"
 (define-key global-map (kbd "C-x g") 'magit-status)
 
 (setq magit-last-seen-setup-instructions "1.4.0")
-
-(require 'magithub) ; GitHub integration
 
 ;; Attempt to improve the performance of compilations 
 (setq process-adaptive-read-buffering nil)
@@ -1003,7 +1000,7 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(elysium gptel cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit magithub projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(elysium gptel cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
  '(projectile-tags-backend 'etags-select)
  '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
  '(safe-local-variable-values '((engine . django)))
