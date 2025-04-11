@@ -904,8 +904,7 @@ PKGSET"
    '("\\*compilation\\*"
      (display-buffer-reuse-window display-buffer-at-bottom)
      (dedicated . t)
-     (window-height . 15)
-     (window-min-height . 0.25)
+     (window-height . 0.25)
      ))
 
 ;; Display the main Magit buffer in the same window as it was invoked from.
