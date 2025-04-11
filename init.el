@@ -949,27 +949,41 @@ PKGSET"
 (global-set-key [(control x) ?7 ?b] 'gptel)
 (global-set-key [(control x) ?7 ?s] 'gptel-send)
 (global-set-key [(control x) ?7 ?r] 'gptel-rewrite)
+(global-set-key [(control x) ?7 ?a] 'gptel-add)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; elysium
+;; elysium (commented out because gptel-aibo is better right now).
 
-(use-package elysium
-  :custom
-  ;; Below are the default values
-  (elysium-window-size 0.33) ; The elysium buffer will be 1/3 your screen
-  (elysium-window-style 'vertical)) ; Can be customized to horizontal
+;; (use-package elysium
+;;   :custom
+;;   ;; Below are the default values
+;;   (elysium-window-size 0.33) ; The elysium buffer will be 1/3 your screen
+;;   (elysium-window-style 'vertical)) ; Can be customized to horizontal
 
-(use-package smerge-mode
-  :ensure nil
-  :hook
-  (prog-mode . smerge-mode))
+;; (use-package smerge-mode
+;;   :ensure nil
+;;   :hook
+;;   (prog-mode . smerge-mode))
 
-(global-set-key [(control x) ?7 ?e] 'elysium-query)
-(global-set-key [(control x) ?7 ?k] 'elysium-keep-all-suggested-changes)
-(global-set-key [(control x) ?7 ?d] 'elysium-discard-all-suggested-changes)
-(global-set-key [(control x) ?7 ?c] 'elysium-clear-buffer)
-(global-set-key [(control x) ?7 ?a] 'elysium-add-context)
-(global-set-key [(control x) ?7 ?t] 'elysium-toggle-window)
+;; (global-set-key [(control x) ?7 ?e] 'elysium-query)
+;; (global-set-key [(control x) ?7 ?k] 'elysium-keep-all-suggested-changes)
+;; (global-set-key [(control x) ?7 ?d] 'elysium-discard-all-suggested-changes)
+;; (global-set-key [(control x) ?7 ?c] 'elysium-clear-buffer)
+;; (global-set-key [(control x) ?7 ?a] 'elysium-add-context)
+;; (global-set-key [(control x) ?7 ?t] 'elysium-toggle-window)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gptel-aibo
+
+(use-package gptel-aibo
+  :ensure t)
+
+;; Talk to the AI about a buffer, with context added by gptel-add.
+;; Hit C-c ! to accept the AI's suggestions.
+(global-set-key [(control x) ?7 ?i] 'gptel-aibo) ;; i for aI (or invoke)
+
+;; Complete the thing you are currently working on.
+(global-set-key [(control x) ?7 ?c] 'gptel-aibo-summon) ;; c for complete
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -999,7 +1013,11 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(elysium gptel cmake-mode helm log4e websocket flycheck-golangci-lint rust-mode lua-mode zones lsp-ui lsp-ivy lsp-mode buffer-move yaml-mode swiper ivy magit projectile go-mode go-dlv dockerfile-mode exec-path-from-shell neotree sr-speedbar ghub))
+   '(buffer-move cmake-mode dockerfile-mode elysium exec-path-from-shell
+		 flycheck-golangci-lint ghub go-dlv go-mode gptel
+		 gptel-aibo helm ivy log4e lsp-ivy lsp-mode lsp-ui
+		 lua-mode magit neotree projectile rust-mode
+		 sr-speedbar swiper websocket yaml-mode zones))
  '(projectile-tags-backend 'etags-select)
  '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
  '(safe-local-variable-values '((engine . django)))
