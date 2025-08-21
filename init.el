@@ -840,6 +840,18 @@ PKGSET"
     (message "Running: %s" cmd)
     (gud-gdb cmd)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Commands for gdb
+
+(add-hook 'gdb-mode-hook
+	  (lambda ()
+	    (gud-def he-kill-gdbserver "monitor exit" "y"
+		     "Kill the gdbserver we are connected to.")
+	    (gud-def he-connect-gdbserver "target extended-remote localhost:2222" "k"
+		     "Connect to gdb server on localhost:2222.")
+	    ))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rust mode
 
