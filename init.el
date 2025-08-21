@@ -1040,6 +1040,24 @@ PKGSET"
 (server-start)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; How to do relative paths in .dir-locals.el.
+;;
+;; he-project-path gets the path of the .dir-locals.el file.  We can
+;; use (eval ...) forms to then manipulate the path.
+
+;; ((nil . ((eval . (set (make-local-variable 'he-project-path)
+;;                       (file-name-directory
+;;                        (let ((d (dir-locals-find-file "./")))
+;;                          (if (stringp d) d (car d))))))
+;;          ;(eval . (message "Project directory set to `%s'." he-project-path))
+;; 	 ))
+;;  (rust-mode . ((eval . (set rust-rustfmt-bin
+;; 			    (concat he-project-path "scripts/sldb_rustfmt.sh")))
+;; 	       ))
+;;  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Automatic
 
 (custom-set-variables
