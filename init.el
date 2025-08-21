@@ -1065,12 +1065,14 @@ PKGSET"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(compilation-max-output-line-length 2000)
  '(compilation-scroll-output 'first-error)
  '(confirm-kill-emacs 'y-or-n-p)
  '(cua-mode nil)
  '(custom-enabled-themes '(tango-dark))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
+ '(gdb-many-windows t)
  '(global-tab-line-mode t)
  '(large-file-warning-threshold 500000000)
  '(magit-diff-refine-hunk t)
@@ -1079,13 +1081,19 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(buffer-move cmake-mode dockerfile-mode elysium exec-path-from-shell
-		 flycheck-golangci-lint ghub go-dlv go-mode gptel
-		 gptel-aibo helm ivy log4e lsp-ivy lsp-mode lsp-ui
-		 lua-mode magit neotree projectile rust-mode
-		 sr-speedbar swiper websocket yaml-mode zones))
+   '(buffer-move claude-code cmake-mode dockerfile-mode eat elysium
+		 exec-path-from-shell flycheck-golangci-lint ghub
+		 go-dlv go-mode gptel gptel-aibo helm ivy log4e
+		 lsp-ivy lsp-mode lsp-ui lua-mode magit neotree
+		 projectile projectile-ripgrep rg rust-mode
+		 sr-speedbar swiper vterm websocket yaml-mode zones))
+ '(package-vc-selected-packages
+   '((claude-code :url "https://github.com/stevemolitor/claude-code.el")))
  '(projectile-tags-backend 'etags-select)
  '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
+ '(rust-format-on-save t)
+ '(rust-rustfmt-bin "/Users/hugh/src/sldb/scripts/sldb_rustfmt.sh")
+ '(safe-local-variable-directories '("/Users/hugh/src/sldb/"))
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
  '(web-mode-code-indent-offset 2))
