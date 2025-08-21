@@ -1008,6 +1008,31 @@ PKGSET"
 ;; Complete the thing you are currently working on.
 (global-set-key [(control x) ?7 ?c] 'gptel-aibo-summon) ;; c for complete
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; claude-code.el
+
+(with-eval-after-load 'package
+  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
+;; for eat terminal backend:
+(use-package eat :ensure t)
+
+;; install claude-code.el
+(use-package claude-code :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config (claude-code-mode)
+  :bind-keymap ("C-c c" . claude-code-command-map))
+
+(add-to-list 'display-buffer-alist
+                 '("^\\*claude"
+                   (display-buffer-in-side-window)
+                   (side . right)
+                   (window-width . 90)))
+
+
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
