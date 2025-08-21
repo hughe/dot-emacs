@@ -859,6 +859,7 @@ PKGSET"
 	  (lambda ()
 	    (local-set-key [(control c) (\#)] 'comment-region)
 	    (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)
+	    
 	    ))
 
 ;; Add rust back traces to compilation-error-regexp-alist.
@@ -934,15 +935,15 @@ PKGSET"
     (insert-file-contents file-path)
     (buffer-string)))
 
-(defun gptel-api-key ()
+(defun he-anthropic-api-key ()
   (he-read-file-contents "~/.emacs.d/claude_key"))
 
 (setq he-claude-standard (gptel-make-anthropic "Claude"
 			   :stream t
-			   :key #'gptel-api-key))
+			   :key #'he-anthropic-api-key))
 
 (setq he-claude-reasoning (gptel-make-anthropic "Claude-Reasoning"
-			    :key #'gptel-api-key
+			    :key #'he-anthropic-api-key
 			    :stream t
 			    :models '(claude-3-7-sonnet-20250219)
 			    :header (lambda () (when-let* ((key (gptel--get-api-key)))
@@ -954,8 +955,18 @@ PKGSET"
 			    :request-params '(:thinking (:type "enabled" :budget_tokens 2048)
 							:max_tokens 4096)))
 
+(defun he-gemini-api-key ()
+  (he-read-file-contents "~/.emacs.d/gemini_key"))
+
+
+(setq he-gemini (gptel-make-gemini "Gemini"
+		  :key #'he-gemini-api-key
+		  :stream t
+		  ))
+
+
 (use-package gptel)
-(setq gptel-model 'claude-3-7-sonnet-20250219)  ;; Was: claude-3-5-sonnet-20240620
+(setq gptel-model 'claude-sonnet-4-20250514)  ;; Was: claude-3-7-sonnet-20250219
 (setq gptel-backend he-claude-standard)
 
 (global-set-key [(control x) ?7 ?b] 'gptel)
