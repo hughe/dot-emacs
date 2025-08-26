@@ -745,50 +745,6 @@ PKGSET"
   (interactive "P")
   (sql-product-interactive 'sldb buffer))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Eglot
-
-
-
-
-(defun he-fixup-remote-filename (file)
-  (message "he-fixup-remote-filename: %s -> %s" file file)
-  file)
-
-;;(defvar he-old-xref-make-file-location nil)
-
-;; (eval-after-load "xref"
-;;   '(progn
-;;      (defun xref-make-file-location (file line column)
-;;        "My"
-;;        (message "IN xref-make-file-location %s %d" file)
-;;        (if (not (file-exists-p file))
-;;            (make-instance 'xref-file-location :file (he-fixup-remote-filename file) :line line :column column)
-;; 	 (make-instance 'xref-file-location :file file :line line :column column)))
-;;      ))
-
-;; (defun he-xref-make-file-location (file line column)
-;;   "My"
-;;   (message "IN xref-make-file-location %s" file)
-;;   (if (not (file-exists-p file))
-;;       (make-instance 'xref-file-location :file (he-fixup-remote-filename file) :line line :column column)
-;;     (make-instance 'xref-file-location :file file :line line :column column)))
-
-;; (advice-add :override (symbol-function 'xref-make-file-location) #'he-xref-make-file-location) 
-
-;; (xref-make-file-location "foogggg" 10 20)
-
-(defun he-eglot--xref-make-match (oldfun &rest args)
-  (message "he-eglot--xref-make-match: %s" args)
-  (let ((ret (apply oldfun name uri range)))
-    (message "he-eglot--xref-make-match: -> %s" ret)
-    ret))
-
-(advice-add 'eglot--xref-make-match :around #'he-eglot--xref-make-match)
-
-;(advice-remove 'eglot--xref-make-match #'he-eglot--xref-make-match)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Cmake mode
 
@@ -869,14 +825,12 @@ PKGSET"
                "^ *at +\\(.+?\\):\\([0-9]+\\)" 
                1 2 nil nil))
 
-
+;; TODO: move this to .dir-locals.el
 ;; Add these directories to the compilation-search-path.
-;;
-;; This should probably be set in compilation-mode-hook iff the
-;; default-directory of the "*compilation*" buffer is an SLDB
-;; directory. We should probably apply 'make-variable-buffer-local' to
-;; the variable.
-(setq compilation-search-path '("/Users/hugh/src/sldb/"))
+(setq compilation-search-path '("/Users/hugh/src/sldb/"
+				"/Users/hugh/src/sldb/src/libsldbrs/"))
+
+(use-package rustic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window management. See
@@ -1085,7 +1039,7 @@ PKGSET"
 		 exec-path-from-shell flycheck-golangci-lint ghub
 		 go-dlv go-mode gptel gptel-aibo helm ivy log4e
 		 lsp-ivy lsp-mode lsp-ui lua-mode magit neotree
-		 projectile projectile-ripgrep rg rust-mode
+		 projectile projectile-ripgrep rg rust-mode rustic
 		 sr-speedbar swiper vterm websocket yaml-mode zones))
  '(package-vc-selected-packages
    '((claude-code :url "https://github.com/stevemolitor/claude-code.el")))
