@@ -1029,18 +1029,20 @@ PKGSET"
  '(gdb-many-windows t)
  '(global-tab-line-mode t)
  '(large-file-warning-threshold 500000000)
+ '(lsp-ui-doc-delay 0.5)
  '(magit-diff-refine-hunk t)
  '(markdown-command "markdown_py")
  '(package-archives
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(buffer-move claude-code cmake-mode dockerfile-mode eat elysium
-		 exec-path-from-shell flycheck-golangci-lint ghub
-		 go-dlv go-mode gptel gptel-aibo helm ivy log4e
+   '(buffer-move claude-code cmake-mode dap-mode dockerfile-mode eat
+		 elysium exec-path-from-shell flycheck-golangci-lint
+		 ghub go-dlv go-mode gptel gptel-aibo helm ivy log4e
 		 lsp-ivy lsp-mode lsp-ui lua-mode magit neotree
-		 projectile projectile-ripgrep rg rust-mode rustic
-		 sr-speedbar swiper vterm websocket yaml-mode zones))
+		 nix-mode nix-modeline projectile projectile-ripgrep
+		 rg rust-mode rustic sr-speedbar swiper vterm
+		 websocket yaml-mode zones))
  '(package-vc-selected-packages
    '((claude-code :url "https://github.com/stevemolitor/claude-code.el")))
  '(projectile-tags-backend 'etags-select)
