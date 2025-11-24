@@ -981,7 +981,7 @@ PKGSET"
                  '("^\\*claude"
                    (display-buffer-in-side-window)
                    (side . right)
-                   (window-width . 90)))
+                   (window-width . 100)))
 
 
 
