@@ -826,9 +826,11 @@ PKGSET"
                1 2 nil nil))
 
 ;; TODO: move this to .dir-locals.el
-;; Add these directories to the compilation-search-path.
-(setq compilation-search-path '("/Users/hugh/src/sldb/"
-				"/Users/hugh/src/sldb/src/libsldbrs/"))
+;; TODO: moved it.  Leave it here until we know it works.
+;; ;; Add these directories to the compilation-search-path.
+;; (setq compilation-search-path '("/Users/hugh/src/sldb/"
+;; 				"/Users/hugh/src/sldb/rs/"
+;; 				"/Users/hugh/src/sldb/c/"))
 
 (use-package rustic)
 
