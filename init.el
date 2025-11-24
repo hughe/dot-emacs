@@ -1040,7 +1040,7 @@ PKGSET"
  '(compilation-scroll-output 'first-error)
  '(confirm-kill-emacs 'y-or-n-p)
  '(cua-mode nil)
- '(custom-enabled-themes '(tango-dark))
+ '(custom-enabled-themes '(modus-vivendi-tinted))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
  '(gdb-many-windows t)
