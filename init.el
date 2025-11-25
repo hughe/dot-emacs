@@ -979,7 +979,26 @@ PKGSET"
   (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; for eat terminal backend:
-(use-package eat :ensure t)
+;;(use-package eat :ensure t)
+
+;; for vterm terminal backend:
+(use-package vterm :ensure t)
+
+;; If vterm has trouble building after an upgrade.  Apply the patch
+;; `vterm-build.patch`.
+(setq claude-code-terminal-backend 'vterm)
+
+;; Enable/disable buffering to prevent flickering on multi-line input (default is t)
+;; When enabled, vterm output that appears to be redrawing multi-line input boxes
+;; will be buffered briefly and processed in a single batch
+;; This prevents flickering when Claude redraws its input box as it expands
+(setq claude-code-vterm-buffer-multiline-output t)
+
+;; Control the delay before processing buffered vterm output (default is 0.01)
+;; This is the time in seconds that vterm waits to collect output bursts
+;; A longer delay may reduce flickering more but could feel less responsive
+;; The default of 0.01 seconds (10ms) provides a good balance
+(setq claude-code-vterm-multiline-delay 0.01)
 
 ;; install claude-code.el
 (use-package claude-code :ensure t
@@ -992,11 +1011,6 @@ PKGSET"
                    (display-buffer-in-side-window)
                    (side . right)
                    (window-width . 100)))
-
-
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
