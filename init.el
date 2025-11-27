@@ -975,11 +975,20 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; claude-code.el
 
-(with-eval-after-load 'package
-  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+;; install claude-code.el
+(use-package claude-code :ensure t
+  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+  :config (claude-code-mode)
+  :bind-keymap ("C-c c" . claude-code-command-map))
+
+
+;; eat is nongnu
+;; (with-eval-after-load 'package
+;;   (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; for eat terminal backend:
 ;;(use-package eat :ensure t)
+
 
 ;; for vterm terminal backend:
 (use-package vterm :ensure t)
@@ -1000,17 +1009,27 @@ PKGSET"
 ;; The default of 0.01 seconds (10ms) provides a good balance
 (setq claude-code-vterm-multiline-delay 0.01)
 
-;; install claude-code.el
-(use-package claude-code :ensure t
-  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
-  :config (claude-code-mode)
-  :bind-keymap ("C-c c" . claude-code-command-map))
+(add-hook 'claude-code-start-hook
+          (lambda ()
+            ;; Only increase scrollback for vterm backend
+            (when (eq claude-code-terminal-backend 'vterm)
+              (setq-local vterm-max-scrollback 100000))))
 
 (add-to-list 'display-buffer-alist
                  '("^\\*claude"
                    (display-buffer-in-side-window)
                    (side . right)
                    (window-width . 100)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; monet.el - more integration for Claude Code.
+;;
+
+(use-package monet
+  :vc (:url "https://github.com/stevemolitor/monet" :rev :newest))
+
+(add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs server
@@ -1063,12 +1082,14 @@ PKGSET"
    '(buffer-move claude-code cmake-mode dap-mode dockerfile-mode eat
 		 elysium exec-path-from-shell flycheck-golangci-lint
 		 ghub go-dlv go-mode gptel gptel-aibo helm ivy log4e
-		 lsp-ivy lsp-mode lsp-ui lua-mode magit neotree
+		 lsp-ivy lsp-mode lsp-ui lua-mode magit monet neotree
 		 nix-mode nix-modeline projectile projectile-ripgrep
 		 rg rust-mode rustic sr-speedbar swiper vterm
 		 websocket yaml-mode zones))
  '(package-vc-selected-packages
-   '((claude-code :url "https://github.com/stevemolitor/claude-code.el")))
+   '((monet :url "https://github.com/stevemolitor/monet")
+     (claude-code :url
+		  "https://github.com/stevemolitor/claude-code.el")))
  '(projectile-tags-backend 'etags-select)
  '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
  '(rust-format-on-save t)
