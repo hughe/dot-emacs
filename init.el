@@ -892,6 +892,7 @@ PKGSET"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gptel
+;;
 
 (defun he-read-file-contents (file-path)
   "Read the contents of FILE-PATH and return it as a string."
@@ -902,41 +903,42 @@ PKGSET"
 (defun he-anthropic-api-key ()
   (he-read-file-contents "~/.emacs.d/claude_key"))
 
-(setq he-claude-standard (gptel-make-anthropic "Claude"
-			   :stream t
-			   :key #'he-anthropic-api-key))
+;; Commented out because I don't use it anymore.
+;; (setq he-claude-standard (gptel-make-anthropic "Claude"
+;; 			   :stream t
+;; 			   :key #'he-anthropic-api-key))
 
-(setq he-claude-reasoning (gptel-make-anthropic "Claude-Reasoning"
-			    :key #'he-anthropic-api-key
-			    :stream t
-			    :models '(claude-3-7-sonnet-20250219)
-			    :header (lambda () (when-let* ((key (gptel--get-api-key)))
-						 `(("x-api-key" . ,key)
-						   ("anthropic-version" . "2023-06-01")
-						   ("anthropic-beta" . "pdfs-2024-09-25")
-						   ("anthropic-beta" . "output-128k-2025-02-19")
-						   ("anthropic-beta" . "prompt-caching-2024-07-31"))))
-			    :request-params '(:thinking (:type "enabled" :budget_tokens 2048)
-							:max_tokens 4096)))
+;; (setq he-claude-reasoning (gptel-make-anthropic "Claude-Reasoning"
+;; 			    :key #'he-anthropic-api-key
+;; 			    :stream t
+;; 			    :models '(claude-3-7-sonnet-20250219)
+;; 			    :header (lambda () (when-let* ((key (gptel--get-api-key)))
+;; 						 `(("x-api-key" . ,key)
+;; 						   ("anthropic-version" . "2023-06-01")
+;; 						   ("anthropic-beta" . "pdfs-2024-09-25")
+;; 						   ("anthropic-beta" . "output-128k-2025-02-19")
+;; 						   ("anthropic-beta" . "prompt-caching-2024-07-31"))))
+;; 			    :request-params '(:thinking (:type "enabled" :budget_tokens 2048)
+;; 							:max_tokens 4096)))
 
 (defun he-gemini-api-key ()
   (he-read-file-contents "~/.emacs.d/gemini_key"))
 
 
-(setq he-gemini (gptel-make-gemini "Gemini"
-		  :key #'he-gemini-api-key
-		  :stream t
-		  ))
+;; (setq he-gemini (gptel-make-gemini "Gemini"
+;; 		  :key #'he-gemini-api-key
+;; 		  :stream t
+;; 		  ))
 
 
-(use-package gptel)
-(setq gptel-model 'claude-sonnet-4-20250514)  ;; Was: claude-3-7-sonnet-20250219
-(setq gptel-backend he-claude-standard)
+;; (use-package gptel)
+;; (setq gptel-model 'claude-sonnet-4-20250514)  ;; Was: claude-3-7-sonnet-20250219
+;; (setq gptel-backend he-claude-standard)
 
-(global-set-key [(control x) ?7 ?b] 'gptel)
-(global-set-key [(control x) ?7 ?s] 'gptel-send)
-(global-set-key [(control x) ?7 ?r] 'gptel-rewrite)
-(global-set-key [(control x) ?7 ?a] 'gptel-add)
+;; (global-set-key [(control x) ?7 ?b] 'gptel)
+;; (global-set-key [(control x) ?7 ?s] 'gptel-send)
+;; (global-set-key [(control x) ?7 ?r] 'gptel-rewrite)
+;; (global-set-key [(control x) ?7 ?a] 'gptel-add)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elysium (commented out because gptel-aibo is better right now).
@@ -962,15 +964,15 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gptel-aibo
 
-(use-package gptel-aibo
-  :ensure t)
+;; (use-package gptel-aibo
+;;   :ensure t)
 
-;; Talk to the AI about a buffer, with context added by gptel-add.
-;; Hit C-c ! to accept the AI's suggestions.
-(global-set-key [(control x) ?7 ?i] 'gptel-aibo) ;; i for aI (or invoke)
+;; ;; Talk to the AI about a buffer, with context added by gptel-add.
+;; ;; Hit C-c ! to accept the AI's suggestions.
+;; (global-set-key [(control x) ?7 ?i] 'gptel-aibo) ;; i for aI (or invoke)
 
-;; Complete the thing you are currently working on.
-(global-set-key [(control x) ?7 ?c] 'gptel-aibo-summon) ;; c for complete
+;; ;; Complete the thing you are currently working on.
+;; (global-set-key [(control x) ?7 ?c] 'gptel-aibo-summon) ;; c for complete
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; claude-code.el
