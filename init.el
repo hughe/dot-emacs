@@ -844,7 +844,7 @@ PKGSET"
               ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
   ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
+  (setq lsp-eldoc-hook nil)
   ;; (setq lsp-enable-symbol-highlighting nil)
   ;; (setq lsp-signature-auto-activate nil)
 
@@ -853,9 +853,25 @@ PKGSET"
 
   )
 
-;;
+;; end rustic config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company mode (hooks into LSP and does completions.
+(use-package company
+  :ensure
+  :custom
+  (company-idle-delay 0.5) ;; how long to wait until popup
+  ;; (company-begin-commands nil) ;; uncomment to disable popup
+  :bind
+  (:map company-active-map
+	      ("C-n". company-select-next)
+	      ("C-p". company-select-previous)
+	      ("M-<". company-select-first)
+	      ("M->". company-select-last)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DAP mode.  Used for debugging in rustic mode.
 (require 'dap-gdb)
 
 (dap-mode 1)
@@ -871,6 +887,8 @@ PKGSET"
 ;; displays floating panel with debug buttons
 ;; requies emacs 26+
 (dap-ui-controls-mode 1)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window management. See
@@ -1047,11 +1065,45 @@ PKGSET"
             (when (eq claude-code-terminal-backend 'vterm)
               (setq-local vterm-max-scrollback 100000))))
 
-(add-to-list 'display-buffer-alist
+(defvar he-claude-code-display-in-frame nil
+  "If non-nil, display *claude buffers in a separate frame.
+Otherwise, display in a side window on the right.")
+
+(defun he-claude-code-toggle-display (&optional mode)
+  "Toggle or set display mode for *claude buffers.
+With optional argument MODE:
+  - 'side: display in side window
+  - 'frame: display in separate frame
+  - nil: toggle between side window and frame"
+  (interactive)
+  (setq he-claude-code-display-in-frame
+        (cond ((eq mode 'side) nil)
+              ((eq mode 'frame) t)
+              (t (not he-claude-code-display-in-frame))))
+  ;; Remove existing claude display-buffer-alist entry
+  (setq display-buffer-alist
+        (seq-remove (lambda (entry)
+                      (and (stringp (car entry))
+                           (string-match-p "^\\^\\\\\\*claude" (car entry))))
+                    display-buffer-alist))
+  ;; Add new entry based on current mode
+  (if he-claude-code-display-in-frame
+      (add-to-list 'display-buffer-alist
+                   '("^\\*claude"
+                     (display-buffer-pop-up-frame)
+                     (pop-up-frame-parameters . ((name . "Claude Code")
+                                                  (width . 100)
+                                                  (height . 50)))))
+    (add-to-list 'display-buffer-alist
                  '("^\\*claude"
                    (display-buffer-in-side-window)
                    (side . right)
-                   (window-width . 100)))
+                   (window-width . 80))))
+  (message "Claude Code buffers will now display in %s"
+           (if he-claude-code-display-in-frame "separate frame" "side window")))
+
+;; Initialize with side window display
+(he-claude-code-toggle-display 'side)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; monet.el - more integration for Claude Code.
@@ -1111,13 +1163,13 @@ PKGSET"
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
  '(package-selected-packages
-   '(buffer-move claude-code cmake-mode dap-mode dockerfile-mode eat
-		 elysium exec-path-from-shell flycheck-golangci-lint
-		 ghub go-dlv go-mode gptel gptel-aibo helm ivy log4e
-		 lsp-ivy lsp-mode lsp-ui lua-mode magit monet neotree
-		 nix-mode nix-modeline projectile projectile-ripgrep
-		 rg rust-mode rustic sr-speedbar swiper vterm
-		 websocket yaml-mode zones))
+   '(buffer-move claude-code cmake-mode company dap-mode dockerfile-mode
+		 eat elysium exec-path-from-shell
+		 flycheck-golangci-lint ghub go-dlv go-mode gptel
+		 gptel-aibo helm ivy log4e lsp-ivy lsp-mode lsp-ui
+		 lua-mode magit monet neotree nix-mode nix-modeline
+		 projectile projectile-ripgrep rg rust-mode rustic
+		 sr-speedbar swiper vterm websocket yaml-mode zones))
  '(package-vc-selected-packages
    '((monet :url "https://github.com/stevemolitor/monet")
      (claude-code :url
