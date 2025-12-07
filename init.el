@@ -1075,7 +1075,7 @@ PKGSET"
             (when (eq claude-code-terminal-backend 'vterm)
               (setq-local vterm-max-scrollback 100000))))
 
-(defvar he-claude-code-display-in-frame nil
+(defvar he-claude-code-display-in-frame 'side
   "If non-nil, display *claude buffers in a separate frame.
 Otherwise, display in a side window on the right.")
 
