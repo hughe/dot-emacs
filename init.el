@@ -1100,7 +1100,9 @@ With optional argument MODE:
   (if he-claude-code-display-in-frame
       (add-to-list 'display-buffer-alist
                    '("^\\*claude"
-                     (display-buffer-pop-up-frame)
+		     (display-buffer-reuse-window
+                      display-buffer-pop-up-frame)
+		     (reusable-frames . visible)
                      (pop-up-frame-parameters . ((name . "Claude Code")
                                                   (width . 100)
                                                   (height . 50)))))
