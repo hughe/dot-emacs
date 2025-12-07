@@ -1025,10 +1025,26 @@ PKGSET"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; claude-code.el
 
+;; We need this
+(use-package inheritenv
+  :vc (:url "https://github.com/purcell/inheritenv" :rev :newest))
+
+;; for eat terminal backend:
+;;(use-package eat :ensure t)
+
+;; for vterm terminal backend:c
+(use-package vterm :ensure t)
+
 ;; install claude-code.el
 (use-package claude-code :ensure t
   :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
-  :config (claude-code-mode)
+  ;;  :vc (:url "https://github.com/hughe/claude-code.el"
+  ;;	    :branch "check-buffer-visible-before-displaying")
+  ;; :load-path "~/.emacs.d/claude-code"
+  :config 
+  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+  (monet-mode 1)
+  (claude-code-mode)
   :bind-keymap ("C-c c" . claude-code-command-map))
 
 
@@ -1036,12 +1052,6 @@ PKGSET"
 ;; (with-eval-after-load 'package
 ;;   (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-;; for eat terminal backend:
-;;(use-package eat :ensure t)
-
-
-;; for vterm terminal backend:
-(use-package vterm :ensure t)
 
 ;; If vterm has trouble building after an upgrade.  Apply the patch
 ;; `vterm-build.patch`.
