@@ -1161,12 +1161,11 @@ With optional argument MODE:
  '(compilation-max-output-line-length 2000)
  '(compilation-scroll-output 'first-error)
  '(confirm-kill-emacs 'y-or-n-p)
- '(cua-mode nil)
  '(custom-enabled-themes '(modus-vivendi-tinted))
  '(flycheck-disabled-checkers '(go-vet))
  '(flycheck-gometalinter-fast t)
  '(gdb-many-windows t)
- '(global-tab-line-mode t)
+ '(global-tab-line-mode nil)
  '(large-file-warning-threshold 500000000)
  '(lsp-ui-doc-delay 0.5)
  '(magit-diff-refine-hunk t)
@@ -1174,14 +1173,7 @@ With optional argument MODE:
  '(package-archives
    '(("melpa" . "http://melpa.org/packages/")
      ("gnu" . "https://elpa.gnu.org/packages/")))
- '(package-selected-packages
-   '(buffer-move claude-code cmake-mode company dap-mode dockerfile-mode
-		 eat elysium exec-path-from-shell
-		 flycheck-golangci-lint ghub go-dlv go-mode gptel
-		 gptel-aibo helm ivy log4e lsp-ivy lsp-mode lsp-ui
-		 lua-mode magit monet neotree nix-mode nix-modeline
-		 projectile projectile-ripgrep rg rust-mode rustic
-		 sr-speedbar swiper vterm websocket yaml-mode zones))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
    '((monet :url "https://github.com/stevemolitor/monet")
      (claude-code :url
@@ -1189,10 +1181,10 @@ With optional argument MODE:
  '(projectile-tags-backend 'etags-select)
  '(projectile-tags-command "uctags -Re -f \"%s\" %s \"%s\"")
  '(rust-format-on-save t)
- '(rust-rustfmt-bin "/Users/hugh/src/sldb/scripts/sldb_rustfmt.sh")
  '(safe-local-variable-directories '("/Users/hugh/src/sldb/"))
  '(safe-local-variable-values '((engine . django)))
  '(speedbar-show-unknown-files t)
+ '(tool-bar-mode nil)
  '(web-mode-code-indent-offset 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
